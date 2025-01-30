@@ -33,26 +33,40 @@ operar_matrices <- function(mat1, mat2 = NULL, operacion) {
   )
 }
 
-# Ejemplo de uso
-matriz1 <- matrix(1:4, nrow = 2)
-matriz2 <- matrix(5:8, nrow = 2)
+# Función para leer una matriz desde la entrada del usuario
+leer_matriz <- function(nombre) {
+  cat(paste("Ingresa los elementos de la matriz", nombre, "(separados por espacios):\n"))
+  elementos <- scan(what = numeric(), nmax = 100, quiet = TRUE)
+  
+  cat("Ingresa el número de filas de la matriz:\n")
+  filas <- as.integer(readline())
+  
+  # Calculamos el número de columnas
+  columnas <- length(elementos) / filas
+  
+  if (columnas != round(columnas)) {
+    stop("El número de elementos no es compatible con el número de filas.")
+  }
+  
+  matriz <- matrix(elementos, nrow = filas, byrow = TRUE)
+  return(matriz)
+}
 
-# Suma
-resultado_suma <- operar_matrices(matriz1, matriz2, "suma")
-print("Resultado de la suma:")
-print(resultado_suma)
+# Leer las matrices del usuario
+matriz1 <- leer_matriz("1")
+matriz2 <- leer_matriz("2")
 
-# Resta
-resultado_resta <- operar_matrices(matriz1, matriz2, "resta")
-print("Resultado de la resta:")
-print(resultado_resta)
+# Elegir la operación
+cat("Elige la operación (suma, resta, multiplicacion, transposicion):\n")
+operacion <- readline()
 
-# Multiplicación
-resultado_multiplicacion <- operar_matrices(matriz1, matriz2, "multiplicacion")
-print("Resultado de la multiplicación:")
-print(resultado_multiplicacion)
-
-# Transposición
-resultado_transposicion <- operar_matrices(matriz1, operacion = "transposicion")
-print("Resultado de la transposición:")
-print(resultado_transposicion)
+# Realizar la operación
+if (operacion == "transposicion") {
+  resultado_transposicion <- operar_matrices(matriz1, operacion = "transposicion")
+  print("Resultado de la transposición:")
+  print(resultado_transposicion)
+} else {
+  resultado <- operar_matrices(matriz1, matriz2, operacion)
+  print(paste("Resultado de la", operacion, ":"))
+  print(resultado)
+}
