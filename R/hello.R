@@ -1,16 +1,26 @@
 # Definimos la función para operar matrices cuadradas
-operar_matrices <- function(mat1, mat2, operacion) {
+operar_matrices <- function(mat1, mat2 = NULL, operacion) {
   # Verificamos que las matrices sean cuadradas y de las mismas dimensiones
-  if (!is.matrix(mat1) || !is.matrix(mat2)) {
-    stop("Ambos argumentos deben ser matrices.")
-  }
-  
-  if (nrow(mat1) != ncol(mat1) || nrow(mat2) != ncol(mat2)) {
-    stop("Ambas matrices deben ser cuadradas.")
-  }
-  
-  if (nrow(mat1) != nrow(mat2)) {
-    stop("Las matrices deben tener las mismas dimensiones.")
+  if (operacion != "transposicion") {
+    if (!is.matrix(mat1) || !is.matrix(mat2)) {
+      stop("Ambos argumentos deben ser matrices.")
+    }
+    
+    if (nrow(mat1) != ncol(mat1) || nrow(mat2) != ncol(mat2)) {
+      stop("Ambas matrices deben ser cuadradas.")
+    }
+    
+    if (nrow(mat1) != nrow(mat2)) {
+      stop("Las matrices deben tener las mismas dimensiones.")
+    }
+  } else {
+    if (!is.matrix(mat1)) {
+      stop("El primer argumento debe ser una matriz.")
+    }
+    
+    if (nrow(mat1) != ncol(mat1)) {
+      stop("La matriz debe ser cuadrada.")
+    }
   }
   
   # Realizamos la operación solicitada
@@ -43,6 +53,6 @@ print("Resultado de la multiplicación:")
 print(resultado_multiplicacion)
 
 # Transposición
-resultado_transposicion <- operar_matrices(matriz1, NULL, "transposicion")
+resultado_transposicion <- operar_matrices(matriz1, operacion = "transposicion")
 print("Resultado de la transposición:")
 print(resultado_transposicion)
